@@ -1,5 +1,6 @@
 # Edit Profile
 alias editconf='code /Users/ale/.oh-my-zsh/custom/example.zsh'
+alias openconf='cd /Users/ale/.oh-my-zsh/custom && code .'
 
 # Cordova
 alias cpa='cordova plugin add'

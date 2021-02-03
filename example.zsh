@@ -93,13 +93,16 @@ function pullAll() {
 }
 
 function IFB() {
-  target=${1:?"Run with target"};
+  brand=${1:?"Run with brand"};
+  target=${2:?"Run with target"};
   here=$(pwd);
-  echo $target;
+  
+  echo $brand $target;
+  
   cd "/Users/$(whoami)/gevity/Longevum.Target/com.longevum.app/";
   wmapp clean -v
   wmapp init -v
-  gevbuild config /Users/$(whoami)/gevity/ ios gevity $target
+  gevbuild config /Users/$(whoami)/gevity/ ios $brand $target
   compileSassGevity
   minifyProject
   wmapp build ios
@@ -116,13 +119,14 @@ function IQB() {
 }
 
 function AFB() {
-  target=${1:?"Run with target"};
+  brand=${1:?"Run with brand"};
+  target=${2:?"Run with target"};
   here=$(pwd);
 
   cd "/Users/$(whoami)/gevity/Longevum.Target/com.longevum.app/";
   wmapp clean -v
   wmapp init -v
-  gevbuild config /Users/$(whoami)/gevity/ android gevity $target
+  gevbuild config /Users/$(whoami)/gevity/ android $brand $target
   compileSassGevity
   minifyProject
   wmapp build android

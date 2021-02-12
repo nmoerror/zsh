@@ -25,7 +25,7 @@ G_BRANCHES=(
   /Users/$(whoami)/gevity/Longevum.Models
   /Users/$(whoami)/gevity/Longevum.Target.Gevity
   /Users/$(whoami)/gevity/MDSaaS.Target
-  /Users/$(whoami)/gevity/MDSaaS.tools
+  #/Users/$(whoami)/gevity/MDSaaS.tools
   /Users/$(whoami)/gevity/MDSaaS.Models
 );
 
@@ -34,8 +34,8 @@ G_MASTERS=(
   "develop"
   "develop"
   "customer/GEV/LAMP-499"
-  "develop"
-  "develop"
+  #"develop"
+  "GEVITY"
 );
 
 # @desc   stash - checkout main - pull

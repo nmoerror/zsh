@@ -1,23 +1,20 @@
 # Edit Profile
-alias editconf="code /Users/$(whoami)/.oh-my-zsh/custom/example.zsh"
-alias openconf="cd /Users/$(whoami)/.oh-my-zsh/custom && code ."
+alias editconf="webstorm /Users/$(whoami)/.oh-my-zsh/custom/example.zsh"
+alias openconf="cd /Users/$(whoami)/.oh-my-zsh/custom && webstorm ."
 
 # Cordova
 alias cpa="cordova plugin add"
 alias cpr="cordova plugin remove"
-alias cpgins="cordova plugins"  
+alias cpgins="cordova plugins"
 alias cpfa="cordova platform add"
 alias cpfr="cordova platform remove"
 
 # Move paths
-alias cdG="cd /Users/$(whoami)/gevity"
-alias cdM="cd /Users/$(whoami)/gevity/Longevum.Models"
-alias cdLT="cd /Users/$(whoami)/gevity/Longevum.Target"
-alias cdLTc="cd /Users/$(whoami)/gevity/Longevum.Target/com.longevum.app"
-alias cdLTG="cd /Users/$(whoami)/gevity/Longevum.Target.Gevity"
-alias cdMDT="cd /Users/$(whoami)/gevity/MDSaaS.Target"
-alias cdMDTools="cd /Users/$(whoami)/gevity/MDSaaS.tools"
-alias cdMDM="cd /Users/$(whoami)/gevity/MDSaaS.Models"
+alias cdM="cd /Users/$(whoami)/gevity"
+
+# Git
+alias gmerge="git mergetool -Y"
+alias gdiff="git difftool -Y"
 
 # Constants
 G_BRANCHES=(
@@ -38,16 +35,82 @@ G_MASTERS=(
   "GEVITY"
 );
 
+# React Native
+function createStore() {
+  type=${1:?"Send with type"};
+  cdRN;
+  cd "store";
+  mkdir $type:l;
+  cd $type:l;
+  #lower= $type:l;
+  #echo $type:
+
+  echo "export interface ${type} {
+  something: string;
+}
+
+export enum ${type}ActionTypes {
+  SET_$type:u = '@@$type:l/SET_$type:u',
+}
+
+export interface ${type}State {
+  readonly data: ${type};
+}
+" > types.ts;
+
+echo "import {Reducer} from 'redux';
+import {${type}State, ${type}ActionTypes} from './types';
+
+export const initialState: ${type}State = {
+	data: {
+    something: ''
+	},
+};
+
+export const $type:lReducer: Reducer<${type}State> = (
+	state = initialState,
+	action
+) => {
+	const {type, payload} = action;
+
+	switch (type) {
+		case ${type}ActionTypes.SET_$type:u: {
+			return {
+				...state,
+				data: {
+					something: payload
+				},
+			};
+		}
+		default: {
+			return state;
+		}
+	}
+};
+" > reducer.ts;
+
+
+echo "import {${type}, ${type}ActionTypes} from './types';
+
+export const set${type} = (data: ${type}) => {
+  return {
+    payload: data,
+    type: ${type}ActionTypes.SET_$type:u,
+  };
+};
+" > actions.ts;
+}
+
 # @desc   stash - checkout main - pull
-function gcdp() {
+function gcmp() {
   git stash
-  git checkout develop
+  git checkout master
   git pull
 }
 
 # @desc   checkout main
-function gcd() {
-  git checkout develop
+function gcm() {
+  git checkout master
 }
 
 # @desc   full minification (JS)
@@ -100,6 +163,27 @@ function pullAll() {
     cd $i
     git stash
     git checkout $G_MASTERS[$index]
+    git pull
+    index=$index+1
+  done
+
+  cd $here;
+}
+
+function commit() {
+  message=${1:?"add a message"};
+  branch=$(git branch --show-current);
+
+  git commit -m "[$branch] $message"
+}
+
+function pullAllPreserve() {
+  here=$(pwd);
+  index=1
+
+  for i in $G_BRANCHES[@];
+  do
+    cd $i
     git pull
     index=$index+1
   done
@@ -174,7 +258,7 @@ function IFB() {
   target=${2:?"Run with target"};
   version=${3:-"1.0.0.0"};
   here=$(pwd);
-  
+
   cd "/Users/$(whoami)/gevity/Longevum.Target/com.longevum.app/";
   wmapp clean -v
   wmapp init -v

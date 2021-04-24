@@ -1,19 +1,19 @@
 # Edit Profile
 alias editconf="webstorm /Users/$(whoami)/.oh-my-zsh/custom/example.zsh"
 
-# Cordova
-alias cpa="cordova plugin add"
-alias cpr="cordova plugin remove"
-alias cpgins="cordova plugins"
-alias cpfa="cordova platform add"
-alias cpfr="cordova platform remove"
-
 # Move paths
 alias cdM="cd /Users/$(whoami)/gevity"
 
 # Git
 alias gmerge="git mergetool -Y"
 alias gdiff="git difftool -Y"
+
+
+function adddflt() {
+  ga .
+  commit "default"
+  git push
+}
 
 # React Native
 function createStore() {

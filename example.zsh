@@ -1,3 +1,10 @@
+# Open Webstorm
+alias yy="webstorm ."
+
+#remote  ssh
+alias connectExpecto="sudo ssh -i ~/.ssh/macpro.pem unstated@20.198.168.146"
+alias connectPatronum="sudo ssh -i ~/.ssh/patronum_key.pem unstated@20.198.169.114"
+
 # Edit Profile
 alias editconf="webstorm /Users/$(whoami)/.oh-my-zsh/custom/example.zsh"
 
